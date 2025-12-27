@@ -1,0 +1,118 @@
+{
+  "meta": { "title": "Новогодний квест", "version": 1 },
+  "stages": [
+    {
+      "id": "stage-1",
+      "title": "Введите пароль",
+      "steps": [
+        {
+          "id": "s1-q1",
+          "type": "date",
+          "prompt": "Введи дату рождения дочери",
+          "rules": { "equals": "2025-07-27" }
+        }
+      ]
+    },
+    {
+      "id": "stage-2",
+      "title": "Вопросы",
+      "steps": [
+        {
+          "id": "s2-q1",
+          "type": "text",
+          "prompt": "Самое ласковое прозвище для мужа",
+          "rules": {
+            "equalsText": "бегемотик",
+            "caseInsensitive": true,
+            "trim": true,
+            "collapseSpaces": true
+          }
+        },
+        {
+          "id": "s2-q2",
+          "type": "text",
+          "prompt": "Напиши латинское название берёзы повислой",
+          "rules": {
+            "equalsText": "betula pendula",
+            "caseInsensitive": true,
+            "trim": true,
+            "collapseSpaces": true
+          }
+        },
+        {
+          "id": "s2-q3",
+          "type": "radio",
+          "prompt": "Брут спросил своего родственника: «Фнсоянс счлщлгоя рюш хипгхлъифнш тгунсе Glvqhb фцьифхецих е плуи?». Ответь на вопрос Брута.",
+          "options": [
+            { "id": "3", "label": "3" },
+            { "id": "6", "label": "6" },
+            { "id": "9", "label": "9" },
+            { "id": "12", "label": "12" },
+            { "id": "15", "label": "15" }
+          ],
+          "rules": { "equalsOptionId": "12" }
+        },
+        {
+          "id": "s2-q4",
+          "type": "radio",
+          "prompt": "Какой из сериалов лишний?",
+          "options": [
+            { "id": "odd-1", "label": "Очень Странные Дела" },
+            { "id": "odd-2", "label": "Фоллаут" },
+            { "id": "odd-3", "label": "Пацаны" },
+            { "id": "odd-4", "label": "Папины дочки" },
+            { "id": "odd-5", "label": "Начало" },
+            { "id": "odd-6", "label": "Бумажный дом" }
+          ],
+          "rules": { "equalsOptionLabel": "Пацаны" }
+        },
+        {
+          "id": "s2-q5",
+          "type": "checkbox",
+          "prompt": "Какой у тебя муж?",
+          "options": [
+            { "id": "kind", "label": "Добрый" },
+            { "id": "caring", "label": "Заботливый" },
+            { "id": "harmful", "label": "Вредный" },
+            { "id": "loved", "label": "Любимый" },
+            { "id": "stinky", "label": "Вонючий" },
+            { "id": "mad", "label": "Бешеный" },
+            { "id": "funny", "label": "Смешной" },
+            { "id": "lazy", "label": "Ленивый" },
+            { "id": "best", "label": "Самый лучший" },
+            { "id": "annoying", "label": "Бесящий" },
+            { "id": "fat", "label": "Толстый" }
+          ],
+          "rules": { "atLeastOneOfAllowed": true },
+          "blockedOptionIds": ["harmful", "stinky", "mad", "lazy", "annoying"]
+        },
+        {
+          "id": "s2-q6",
+          "type": "checkbox",
+          "prompt": "Чего больше всего хочет молодая мама?",
+          "options": [
+            { "id": "eat", "label": "Есть" },
+            { "id": "sleep", "label": "Спать" },
+            { "id": "rest", "label": "Отдыхать" }
+          ],
+          "rules": { "mustSelectAll": true }
+        }
+      ]
+    },
+    {
+      "id": "stage-3",
+      "title": "Финальная загадка",
+      "steps": [
+        {
+          "id": "s3-final",
+          "type": "final",
+          "content": [
+            "Отлично! Ты близко к цели.",
+            "Ключ к последней загадке: 435126",
+            "А шифр ты уже знаешь."
+          ]
+        }
+      ]
+    }
+  ]
+}
