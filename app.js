@@ -11,6 +11,7 @@ const state = {
     wrongCount: 0,
     codePiecesShown: {},
     lastIndex: 0,
+    answers: {},
   },
   lastDirection: "right",
 };
@@ -69,6 +70,7 @@ const loadProgress = () => {
       ...parsed,
       completedStepIds: parsed.completedStepIds || [],
       codePiecesShown: parsed.codePiecesShown || {},
+      answers: parsed.answers || {},
     };
   } catch (error) {
     console.warn("Failed to parse saved progress", error);
@@ -117,6 +119,7 @@ const renderFinal = (step) => {
 const renderInput = (step) => {
   const group = document.createElement("div");
   group.className = "input-group";
+  const savedAnswer = state.progress.answers[step.id];
 
   if (step.type === "text") {
     const input = document.createElement("input");
@@ -124,14 +127,31 @@ const renderInput = (step) => {
     input.className = "text-input";
     input.placeholder = "Ответ";
     input.autocomplete = "off";
+    if (typeof savedAnswer === "string") {
+      input.value = savedAnswer;
+    }
+    input.addEventListener("input", () => {
+      state.progress.answers[step.id] = input.value;
+      saveProgress();
+    });
     group.appendChild(input);
   }
 
   if (step.type === "date") {
+    const wrapper = document.createElement("div");
+    wrapper.className = "date-input-wrapper";
     const input = document.createElement("input");
     input.type = "date";
     input.className = "date-input";
-    group.appendChild(input);
+    if (typeof savedAnswer === "string") {
+      input.value = savedAnswer;
+    }
+    input.addEventListener("input", () => {
+      state.progress.answers[step.id] = input.value;
+      saveProgress();
+    });
+    wrapper.appendChild(input);
+    group.appendChild(wrapper);
   }
 
   if (step.type === "radio" || step.type === "checkbox") {
@@ -145,6 +165,27 @@ const renderInput = (step) => {
       input.name = step.id;
       input.value = option.id;
       input.id = `${step.id}-${option.id}`;
+      if (step.type === "radio" && savedAnswer === option.id) {
+        input.checked = true;
+      }
+      if (
+        step.type === "checkbox" &&
+        Array.isArray(savedAnswer) &&
+        savedAnswer.includes(option.id)
+      ) {
+        input.checked = true;
+      }
+      input.addEventListener("change", () => {
+        if (step.type === "radio") {
+          state.progress.answers[step.id] = input.checked ? input.value : "";
+        } else {
+          const checked = Array.from(
+            group.querySelectorAll("input:checked")
+          ).map((item) => item.value);
+          state.progress.answers[step.id] = checked;
+        }
+        saveProgress();
+      });
 
       const span = document.createElement("span");
       span.textContent = option.label;
@@ -258,7 +299,20 @@ const renderStep = () => {
 
   const prompt = document.createElement("p");
   prompt.className = "prompt";
-  prompt.textContent = step.type === "final" ? "Финал" : step.prompt;
+  if (step.type === "final") {
+    prompt.textContent = "Финал";
+  } else if (step.id === "s1-q1") {
+    prompt.textContent = step.prompt;
+  } else {
+    const questionSteps = state.steps.filter(
+      (item) => item.type !== "final" && item.id !== "s1-q1"
+    );
+    const questionIndex = questionSteps.findIndex(
+      (item) => item.id === step.id
+    );
+    const questionNumber = questionIndex === -1 ? "" : `${questionIndex + 1}. `;
+    prompt.textContent = `Вопрос ${questionNumber}${step.prompt}`;
+  }
 
   elements.step.appendChild(prompt);
 
@@ -359,6 +413,7 @@ const resetProgress = () => {
     wrongCount: 0,
     codePiecesShown: {},
     lastIndex: 0,
+    answers: {},
   };
   state.currentIndex = 0;
   saveProgress();
