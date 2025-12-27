@@ -155,6 +155,12 @@ body::after {
   animation: shake 280ms ease;
 }
 
+.step.is-success {
+  border-color: var(--holiday-green);
+  box-shadow: 0 0 0 2px rgba(15, 122, 65, 0.12), 0 18px 38px rgba(15, 122, 65, 0.18);
+  animation: successGlow 900ms ease;
+}
+
 .step.slide-in-right {
   animation: slideInRight 280ms ease;
 }
@@ -213,14 +219,16 @@ body::after {
   margin: 0;
 }
 
-.input-row.is-blocked {
-  opacity: 0.8;
-}
-
 .input-row.is-error {
   border-color: var(--accent);
   background: #feecec;
   animation: shake 280ms ease;
+}
+
+.input-row.is-blocked-feedback {
+  border-color: var(--accent);
+  background: #feecec;
+  animation: blockedPulse 1000ms ease;
 }
 
 .input-row:focus-within {
@@ -338,6 +346,18 @@ body::after {
   }
 }
 
+@keyframes successGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(15, 122, 65, 0.35), 0 8px 18px rgba(28, 28, 40, 0.1);
+  }
+  60% {
+    box-shadow: 0 0 0 6px rgba(15, 122, 65, 0.2), 0 18px 38px rgba(15, 122, 65, 0.22);
+  }
+  100% {
+    box-shadow: 0 0 0 2px rgba(15, 122, 65, 0.12), 0 16px 34px rgba(15, 122, 65, 0.16);
+  }
+}
+
 @keyframes holidayGlow {
   0% {
     background-position: 0% 50%;
@@ -368,6 +388,21 @@ body::after {
   }
   100% {
     background-position: 0 220px, 30px 260px;
+  }
+}
+
+@keyframes blockedPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(195, 31, 45, 0.2);
+  }
+  35% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 6px rgba(195, 31, 45, 0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(195, 31, 45, 0);
   }
 }
 
