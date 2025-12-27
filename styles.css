@@ -4,6 +4,8 @@
   --card: #ffffff;
   --accent: #d93030;
   --accent-dark: #b01d1d;
+  --holiday-green: #1a8f4a;
+  --holiday-green-soft: #e6f7ee;
   --text: #1c1c28;
   --muted: #6f6f85;
   --border: #e5e5f0;
@@ -19,14 +21,14 @@
 body {
   margin: 0;
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(135deg, #f7f7fb 0%, #fef2f2 100%);
+  background: linear-gradient(135deg, #f7f7fb 0%, #fef2f2 55%, #ecfbf2 100%);
   color: var(--text);
 }
 
 .app {
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
   gap: 16px;
 }
@@ -39,21 +41,22 @@ body {
 
 .app__header,
 .app__footer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
 }
 
 .app__subtitle {
   margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .app__title {
   margin: 4px 0 0;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .app__status {
@@ -97,7 +100,7 @@ body {
 
 .app__main {
   flex: 1;
-  display: flex;
+  display: grid;
   align-items: center;
 }
 
@@ -108,8 +111,7 @@ body {
   padding: 20px;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 16px;
   min-height: 0;
 }
@@ -157,10 +159,12 @@ body {
 .input-group {
   display: grid;
   gap: 12px;
+  min-width: 0;
 }
 
 .input-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 10px;
   padding: 12px;
@@ -193,6 +197,8 @@ body {
 .text-input,
 .date-input {
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -218,6 +224,7 @@ body {
 
 .app__footer {
   gap: 12px;
+  align-items: start;
 }
 
 .btn {
@@ -248,16 +255,15 @@ body {
 }
 
 .footer__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  display: grid;
+  justify-items: end;
   gap: 6px;
 }
 
 .code-piece {
   min-height: 18px;
   font-size: 1rem;
-  color: var(--muted);
+  color: var(--holiday-green);
   opacity: 0;
   transition: opacity 240ms ease;
 }
