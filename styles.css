@@ -219,14 +219,16 @@ body::after {
   margin: 0;
 }
 
-.input-row.is-blocked {
-  opacity: 0.8;
-}
-
 .input-row.is-error {
   border-color: var(--accent);
   background: #feecec;
   animation: shake 280ms ease;
+}
+
+.input-row.is-blocked-feedback {
+  border-color: var(--accent);
+  background: #feecec;
+  animation: blockedPulse 1000ms ease;
 }
 
 .input-row:focus-within {
@@ -386,6 +388,21 @@ body::after {
   }
   100% {
     background-position: 0 220px, 30px 260px;
+  }
+}
+
+@keyframes blockedPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(195, 31, 45, 0.2);
+  }
+  35% {
+    transform: scale(1.01);
+    box-shadow: 0 0 0 6px rgba(195, 31, 45, 0.18);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(195, 31, 45, 0);
   }
 }
 

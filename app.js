@@ -196,15 +196,19 @@ const renderInput = (step) => {
       if (step.type === "checkbox") {
         const blockedIds = step.blockedOptionIds || [];
         if (blockedIds.includes(option.id)) {
-          label.classList.add("is-blocked");
           label.addEventListener("click", (event) => {
-            event.preventDefault();
             markWrong();
-            label.classList.add("is-error");
-            input.checked = false;
+            input.checked = true;
+            label.classList.add("is-blocked-feedback");
             setTimeout(() => {
-              label.classList.remove("is-error");
-            }, 320);
+              input.checked = false;
+              label.classList.remove("is-blocked-feedback");
+              const checked = Array.from(
+                group.querySelectorAll("input:checked")
+              ).map((item) => item.value);
+              state.progress.answers[step.id] = checked;
+              saveProgress();
+            }, 1000);
           });
         }
       }
