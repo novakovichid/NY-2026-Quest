@@ -380,6 +380,8 @@ const handleCheck = () => {
     setError("");
     updateProgressOnSuccess(step);
     renderStep();
+    elements.step.classList.add("is-success");
+    setTimeout(() => elements.step.classList.remove("is-success"), 900);
     return;
   }
   markWrong();
